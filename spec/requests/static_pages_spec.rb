@@ -8,7 +8,7 @@ describe "StaticPages" do
    end
    it "Should have title 'Home'" do
    	visit('/static_pages/home/')
-   	expect(page).to have_title('Ruby on Rails tutorial App | Home')
+   	expect(page).not_to have_title('| Home')
    end
    end
    describe "Help page" do
