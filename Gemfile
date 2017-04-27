@@ -3,6 +3,8 @@ ruby '2.0.0'
 #ruby-gemset=new_gemset
 
 gem 'rails','4.0.8'
+gem 'faker', '1.1.2'
+gem 'bootstrap-will_paginate','0.0.9'
 
 group :development, :test  do
 	gem 'sqlite3','1.3.8'
