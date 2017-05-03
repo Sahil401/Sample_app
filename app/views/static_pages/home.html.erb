@@ -8,17 +8,17 @@
         title: {
           text: "User popularity"
         },
-        XAxis: {
+        xAxis: {
           type: "datetime"
         },
-        YAxis: {
+        yAxis: {
           title: {
             text: "followers"
           }
         },
         series: [{
           pointInterval: <%= 1.day * 1000 %>
-          pointStart: <%= 3.days.ago.to_i * 1000%>
+          pointStart: <%= 1.week.ago.to_i * 1000%>,
           data: [1,2,3,7,5]
         }]
       });

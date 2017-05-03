@@ -4,14 +4,14 @@ class UsersController < ApplicationController
   before_action :admin_user, only: :destroy
 
   def create
-  	user=User.find_by(email: params[:user][:email].downcase)
-  	if user && user.authenticate(params[:user][:password])
+  	@user=User.find_by(email: params[:user][:email].downcase)
+  	if @user && @user.authenticate(params[:user][:password])
       sign_in user
       flash[:sucess] = "Welcome to the Sample App!"
   		redirect_back_or user
   	else
-      user = User.create(user_params)
-      if user.save
+      @user = User.create(user_params)
+      if @user.save
         flash[:sucess] = "Welcome to the Sample App!"
         redirect_back_or user
       else
