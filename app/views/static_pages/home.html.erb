@@ -1,8 +1,38 @@
 <% if signed_in? %>
+  <script type="text/javascript" charset="utf-8">
+    $(function(){
+      var myChart = new Highcharts.Chart({
+        chart: {
+          renderTo: "trend_chart"
+        },
+        title: {
+          text: "User popularity"
+        },
+        XAxis: {
+          type: "datetime"
+        },
+        YAxis: {
+          title: {
+            text: "followers"
+          }
+        },
+        series: [{
+          pointInterval: <%= 1.day * 1000 %>
+          pointStart: <%= 3.days.ago.to_i * 1000%>
+          data: [1,2,3,7,5]
+        }]
+      });
+    });
+  </script>
+  <div id="trend_chart" style="width:560px; hieght:300px;">
+  </div>
   <div class="row">
     <aside class="span4">
       <section>
         <%= render 'shared/user_info' %>
+      </section>
+      <section>
+        <%= render 'shared/stats' %>
       </section>
       <section>
         <%= render 'shared/micropost_form' %>

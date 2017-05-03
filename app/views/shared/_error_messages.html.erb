@@ -1,24 +1,12 @@
-<% if !@user.nil? && 	@user.errors.any? %>
-	<div id="error_explanation">
-	<div class="alert alert-error">
-		The form contains <%= pluralize(@user.errors.count,"error")%>
-	</div>
-	<ul>
-		<% @user.errors.full_messages.each do |msg| %>
-		<li>* <%= msg %></li>
-		<%end%>
-	</ul>
-	</div>
-	<% if 	object.errors.any? %>
-  <div id="error_explanation">
-    <div class="alert alert-error">
-      The form contains <%= pluralize(object.errors.count, "error") %>.
+<% if !object.nil? && object.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-error">
+        The form contains <%= pluralize(object.errors.count, "error") %>.
+      </div>
+      <ul>
+        <% object.errors.full_messages.each do |msg| %>
+          <li>* <%= msg %></li>
+        <% end %>
+      </ul>
     </div>
-    <ul>
-    <% object.errors.full_messages.each do |msg| %>
-      <li>* <%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
 <% end %>
-	<% end %>

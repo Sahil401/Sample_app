@@ -1,18 +1,38 @@
 class UsersController < ApplicationController
-  before_action :signed_in_user, only: [:edit,:update]
+  before_action :signed_in_user, only: [:index,:edit,:update,:destroy,:following,:followers]
   before_action :correct_user, only: [:edit,:update] 
   before_action :admin_user, only: :destroy
 
   def create
-  	user=User.find_by(email: params[:session][:email].downcase)
-  	if user && user.authenticate(params[:session][:password])
+  	user=User.find_by(email: params[:user][:email].downcase)
+  	if user && user.authenticate(params[:user][:password])
       sign_in user
       flash[:sucess] = "Welcome to the Sample App!"
   		redirect_back_or user
   	else
-      flash[:error] = "Invalid email/password combination"
-  		render 'new'
-  	end
+      user = User.create(user_params)
+      if user.save
+        flash[:sucess] = "Welcome to the Sample App!"
+        redirect_back_or user
+      else
+        flash[:error] = "Wrong email/password combination"
+        render 'new'
+  	 end
+    end
+  end
+
+  def following
+    @title = "Following"
+    @user = User.find(params[:id])
+    @users = @user.followed_users.paginate(page: params[:page])
+    render 'show_follow'
+  end
+
+  def followers
+    @title = "Followers"
+    @user = User.find(params[:id])
+    @users = @user.followers.paginate(page: params[:page])
+    render 'show_follow'
   end
 
   def index
@@ -30,16 +50,30 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+    if params[:change_password] == "true"
+      @pass = true
+    else
+      @pass = false
+    end
   end
 
   def update
     @user = User.find(params[:id])
-    if @user.update_attributes(user_params)
-      flash[:sucess]="Sucessfully updated the information"
-      redirect_to @user
+    if params[:user][:email]
+      if @user.update_attributes(params.require(:user).permit(:name,:email))
+        flash[:sucess]="Sucessfully updated the information"
+        redirect_to @user
+      else
+        render 'edit'
+      end
     else
-      render 'edit'
-  end
+      if @user.update_attributes(params.require(:user).permit(:password,:password_confirmation)) 
+        flash[:sucess]="Sucessfully updated the information"
+        redirect_to @user
+      else
+        render 'edit'
+      end
+    end
   end
 
   def destroy
