@@ -6,16 +6,16 @@ class UsersController < ApplicationController
   def create
   	@user=User.find_by(email: params[:user][:email].downcase)
   	if @user && @user.authenticate(params[:user][:password])
-      sign_in user
+      sign_in @user
       flash[:sucess] = "Welcome to the Sample App!"
-  		redirect_back_or user
+  		redirect_to root_url
   	else
       @user = User.create(user_params)
       if @user.save
+        sign_in @user
         flash[:sucess] = "Welcome to the Sample App!"
-        redirect_back_or user
+        redirect_to root_url
       else
-        flash[:error] = "Wrong email/password combination"
         render 'new'
   	 end
     end
