@@ -5,7 +5,10 @@ ruby '2.0.0'
 gem 'rails','4.0.8'
 gem 'faker', '1.1.2'
 gem 'bootstrap-will_paginate','0.0.9'
-gem "highcharts-rails"
+gem 'highcharts-rails'
+gem 'omniauth'
+gem 'omniauth-twitter'
+gem 'devise'
 
 group :development, :test  do
 	gem 'sqlite3','1.3.8'

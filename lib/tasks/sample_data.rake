@@ -4,6 +4,7 @@ namespace :db do
     make_users
     make_microposts
     make_relationships
+    update_relationships
   end
 end
 
@@ -37,6 +38,17 @@ def make_relationships
   user  = users.first
   followed_users = users[2..50]
   followers      = users[3..40]
-  followed_users.each { |followed| user.follow!(followed) }
-  followers.each      { |follower| follower.follow!(user) }
+  followed_users.each_with_index { |followed| user.follow!(followed) }
+  followers.each_with_index      { |follower| follower.follow!(user) }
+end
+
+def update_relationships
+  users = User.all
+  user  = users.first
+  followed_users = users[2..50]
+  followers      = users[3..40]
+  followed_users.each_with_index { |followed,index| user.update_follow!(followed,Time.now - index.days) }
+  followers.each_with_index do |follower,index| 
+    follower.update_follow!(user,Time.now - index.days)
+  end
 end

@@ -7,6 +7,7 @@ SampleApp::Application.routes.draw do
   end
   resources :sessions, only: [:new, :create, :destroy]
   resources :relationships, only: [:create, :destroy]
+  match '/auth/:provider/callback', to: 'authentications#create', via: 'get'
   match '/signout', to: 'sessions#destroy', via: 'delete'
   match '/signin', to: 'sessions#new', via: 'get'
   match '/signup', to:'users#new', via: 'get'

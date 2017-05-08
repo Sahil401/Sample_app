@@ -21,6 +21,10 @@ class UsersController < ApplicationController
     end
   end
 
+  def count(date)
+    where("date(followers) = ?", date).count
+  end
+
   def following
     @title = "Following"
     @user = User.find(params[:id])
