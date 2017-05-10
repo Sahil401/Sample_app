@@ -31,4 +31,7 @@ class AuthenticationsController < ApplicationController
       end
     end
   end
+  def destroy
+    
+  end
 end

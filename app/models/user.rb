@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_many :authentications
+  has_many :authentications, dependent: :destroy
 	has_many :microposts, dependent: :destroy
 	has_many :relationships, foreign_key: "follower_id" , dependent: :destroy
 	has_many :reverse_relationships, foreign_key: "followed_id",
@@ -36,8 +36,13 @@ class User < ActiveRecord::Base
 	end
 
   def followers_on(date)
-    @relation = Relationship.all.where("followed_id = ? AND (created_at >= ? AND created_at <= ?)",self.id,2.months.ago.beginning_of_day,date.end_of_day)
+    @relation = Relationship.where("followed_id = ? AND (created_at >= ? AND created_at <= ?)",self.id,date.beginning_of_day,date.end_of_day)
     @relation.count
+  end
+
+  def tweets(date)
+    @tweets = Micropost.where("user_id != ? AND (created_at >= ? AND created_at <= ?)",self.id,date.beginning_of_day,date.end_of_day)
+    @tweets.count
   end
 
   def update_follow!(other_user,date)
