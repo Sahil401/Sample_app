@@ -1,2 +1,4 @@
-$("#follow_form").html("<%= escape_javascript(render('users/unfollow')) %>")
-$("#followers").html('<%= @user.followers.count %>')
+$("#follow_form").html("<%= escape_javascript(render('users/unfollow')) %>");
+$("#followers").html('<%= @user.followers.count %>');
+$("#trend_chart").html("<%= escape_javascript(render('users/trend_chart')) %>");
+

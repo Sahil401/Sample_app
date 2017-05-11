@@ -9,6 +9,9 @@ gem 'highcharts-rails'
 gem 'omniauth'
 gem 'omniauth-twitter'
 gem 'devise'
+gem 'traceroute'
+gem 'rack-mini-profiler'
+gem 'brakeman'
 
 group :development, :test  do
 	gem 'sqlite3','1.3.8'
